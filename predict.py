@@ -31,9 +31,9 @@ MAX_SEED = np.iinfo(np.int32).max
 STYLE_NAMES = list(styles.keys())
 DEFAULT_STYLE_NAME = "Photographic (Default)"
 
-FEATURE_EXTRACTOR = "./feature-extractor"
-SAFETY_CACHE = "./models/safety-cache"
-SAFETY_URL = "https://weights.replicate.delivery/default/sdxl/safety-1.0.tar"
+# FEATURE_EXTRACTOR = "./feature-extractor"
+# SAFETY_CACHE = "./models/safety-cache"
+# SAFETY_URL = "https://weights.replicate.delivery/default/sdxl/safety-1.0.tar"
 
 BASE_MODEL_URL = "https://weights.replicate.delivery/default/SG161222--RealVisXL_V3.0-11ee564ebf4bd96d90ed5d473cb8e7f2e6450bcf.tar"
 BASE_MODEL_PATH = "models/SG161222/RealVisXL_V3.0"
@@ -71,13 +71,13 @@ class Predictor(BasePredictor):
         if not os.path.exists(BASE_MODEL_PATH):
             download_weights(BASE_MODEL_URL, BASE_MODEL_PATH)
 
-        print("Loading safety checker...")
-        if not os.path.exists(SAFETY_CACHE):
-            download_weights(SAFETY_URL, SAFETY_CACHE)
-        self.safety_checker = StableDiffusionSafetyChecker.from_pretrained(
-            SAFETY_CACHE, torch_dtype=torch.float16
-        ).to("cuda")
-        self.feature_extractor = CLIPImageProcessor.from_pretrained(FEATURE_EXTRACTOR)
+        # print("Loading safety checker...")
+        # if not os.path.exists(SAFETY_CACHE):
+        #     download_weights(SAFETY_URL, SAFETY_CACHE)
+        # self.safety_checker = StableDiffusionSafetyChecker.from_pretrained(
+        #     SAFETY_CACHE, torch_dtype=torch.float16
+        # ).to("cuda")
+        # self.feature_extractor = CLIPImageProcessor.from_pretrained(FEATURE_EXTRACTOR)
 
         self.pipe = PhotoMakerStableDiffusionXLPipeline.from_pretrained(
             BASE_MODEL_PATH,
@@ -211,29 +211,29 @@ class Predictor(BasePredictor):
             guidance_scale=guidance_scale,
         ).images
 
-        if not disable_safety_checker:
-            print(f"Running safety checker...")
-            _, has_nsfw_content = self.run_safety_checker(images)
+        # if not disable_safety_checker:
+        #     print(f"Running safety checker...")
+        #     _, has_nsfw_content = self.run_safety_checker(images)
         # save results to file
         print(f"Saving images to file...")
         output_paths = []
         for i, image in enumerate(images):
-            if not disable_safety_checker:
-                if has_nsfw_content[i]:
-                    print(f"NSFW content detected in image {i}")
-                    continue
+            # if not disable_safety_checker:
+            #     if has_nsfw_content[i]:
+            #         print(f"NSFW content detected in image {i}")
+            #         continue
             output_path = output_folder / f"image_{i}.png"
             image.save(output_path)
             output_paths.append(output_path)
         return [Path(p) for p in output_paths]
 
-    def run_safety_checker(self, image):
-        safety_checker_input = self.feature_extractor(image, return_tensors="pt").to(
-            "cuda"
-        )
-        np_image = [np.array(val) for val in image]
-        image, has_nsfw_concept = self.safety_checker(
-            images=np_image,
-            clip_input=safety_checker_input.pixel_values.to(torch.float16),
-        )
-        return image, has_nsfw_concept
+    # def run_safety_checker(self, image):
+    #     safety_checker_input = self.feature_extractor(image, return_tensors="pt").to(
+    #         "cuda"
+    #     )
+    #     np_image = [np.array(val) for val in image]
+    #     image, has_nsfw_concept = self.safety_checker(
+    #         images=np_image,
+    #         clip_input=safety_checker_input.pixel_values.to(torch.float16),
+    #     )
+    #     return image, has_nsfw_concept
