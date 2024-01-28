@@ -68,14 +68,14 @@ class Predictor(BasePredictor):
 
         # download PhotoMaker checkpoint to cache
         # if we already have the model, this doesn't do anything
-        if not os.path.exists(PHOTOMAKER_PATH):
-            download_weights(PHOTOMAKER_URL, PHOTOMAKER_PATH, extract=False)
+        # if not os.path.exists(PHOTOMAKER_PATH):
+        #     download_weights(PHOTOMAKER_URL, PHOTOMAKER_PATH, extract=False)
 
-        if not os.path.exists(BASE_MODEL_PATH):
-            download_weights(BASE_MODEL_URL, BASE_MODEL_PATH, extract=False)
+        # if not os.path.exists(BASE_MODEL_PATH):
+        #     download_weights(BASE_MODEL_URL, BASE_MODEL_PATH, extract=False)
 
-        if not os.path.exists(LORA_PATH):
-            download_weights(LORA_URL, LORA_PATH, extract=False)
+        # if not os.path.exists(LORA_PATH):
+        #     download_weights(LORA_URL, LORA_PATH, extract=False)
 
         # print("Loading safety checker...")
         # if not os.path.exists(SAFETY_CACHE):
