@@ -36,10 +36,10 @@ SAFETY_CACHE = "./models/safety-cache"
 SAFETY_URL = "https://weights.replicate.delivery/default/sdxl/safety-1.0.tar"
 
 BASE_MODEL_URL = "https://weights.replicate.delivery/default/civitai/sdxlUnstableDiffusers_v11.safetensors"
-BASE_MODEL_PATH = "models/sdxlUnstableDiffusers_v11.safetensors"
+BASE_MODEL_PATH = "models/sd_xl_base_1.0_0.9vae.safetensors"
 
 LORA_URL = "https://weights.replicate.delivery/default/civitai/xl_more_art-full_v1.safetensors"
-LORA_PATH = "models/xl_more_art-full_v1.safetensors"
+LORA_PATH = "models/Aether_Snow_v1_SDXL_LoRA.safetensors"
 
 PHOTOMAKER_URL = "https://weights.replicate.delivery/default/TencentARC--PhotoMaker/photomaker-v1.bin"
 PHOTOMAKER_PATH = "models/photomaker-v1.bin"
